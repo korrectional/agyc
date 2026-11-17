@@ -76,9 +76,18 @@ def find_agy_executable() -> Optional[str]:
             return candidate
 
     home = os.path.expanduser("~")
+    # Windows default path
     candidate = os.path.join(home, "AppData", "Local", "agy", "bin", "agy.exe")
     if os.path.isfile(candidate):
         return candidate
+
+    # Linux / Unix default paths
+    candidate_linux = os.path.join(home, ".local", "bin", "agy")
+    if os.path.isfile(candidate_linux):
+        return candidate_linux
+
+    if os.path.isfile("/usr/local/bin/agy"):
+        return "/usr/local/bin/agy"
 
     return None
 
